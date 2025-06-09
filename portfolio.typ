@@ -9,13 +9,14 @@
 
 // #show grid: set pad(1cm)
 
-#let project(name, description, content, show-item: true) = {
+#let project(name, github, description, content, show-item: true) = {
   [
     #pad(
       bottom: -0.2cm,
       top: 0.1cm,
       [
         #heading(name, level: 2)
+        #text(fill:color.blue)[#link(github)]\
         #description
       ],
     )
@@ -39,6 +40,7 @@
 #section[Projects]
 #project(
   [Telometer],
+  "https://github.com/gagnonsilas/telometer",
   [
     Designed and implemented a telemetry protocol and visualization dashboard
   ],
@@ -70,6 +72,7 @@
 #pagebreak()
 #project(
   [Wheel Speed Sensors],
+  "",
   [
     Designed analog quadrature hall effect sensors to measure continuious rotation for FSAE electric car
   ],
@@ -108,6 +111,7 @@
 #pagebreak()
 #project(
   [FSAE Accumulator],
+  "",
   [
     Retrofit 403.2V battery pack for a Formula Student Hybrid + Electric race car in just under 8 weeks
   ],
@@ -148,6 +152,7 @@
 #pagebreak()
 #project(
   [Sound Camera],
+  "https://github.com/gagnonsilas/sound-camera",
   [
     In Progress: Working on building distributed network of microphones to record and reconstruct 3d audio
   ],
