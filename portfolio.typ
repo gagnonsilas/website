@@ -8,15 +8,21 @@
 // #set page(margin: 1cm);
 
 // #show grid: set pad(1cm)
+#set figure(supplement: "", numbering: none)
+#set page(margin: 1.5cm)
+#show figure: set block(inset: 0.5em)
+#set list(indent: 2em)
+// #set grid(gutter:2em)
 
 #let project(name, github, description, content, show-item: true) = {
   [
     #pad(
-      bottom: -0.2cm,
+      bottom: 0.0cm,
       top: 0.1cm,
       [
         #heading(name, level: 2)
-        #text(fill:color.blue)[#link(github)]\
+        #line(length: 1cm, stroke: color.teal)
+        #text(fill: color.blue)[#link(github)]\
         #description
       ],
     )
@@ -25,19 +31,22 @@
 }
 
 #set text(
-  font: "Charis SIL",
+  font: "Atkinson Hyperlegible Next",
   size: 9.5pt,
 )
 
 #let section(title) = {
   [
-    #heading(title, level: 1)
-    #line(length: 5cm, stroke: color.teal)
+    #align(right)[
+      #heading(title, level: 1)
+      #line(length: 5cm, stroke: color.teal)
+    ]
   ]
 }
 
 
-#section[Projects]
+#section[Project Portfolio -- Silas Gagnon]
+
 #project(
   [Telometer],
   "https://github.com/gagnonsilas/telometer",
@@ -52,7 +61,7 @@
     #grid(
       columns: (1fr, 0.9fr),
       figure(
-        image("portfolio/CarPlot.png", width: 90%),
+        image("portfolio/CarPlot.png", width: 80%),
         caption: "Plot of WPI Goat Fast racing electric car acceleration test run",
       ),
       [
@@ -62,8 +71,83 @@
           - Robotics courses with differential embedded robots and 6 degree of freedom arms
           - WPI Goat Fast Racing electric car live tuning and plotting
           - Used by another WPI student for a combat robot: Danger Doughnut #link( "https://github.com/gavin4d/dangerDoughnut")
+          - Live plot of temperature for toaster oven PCB reflow station
         - Implemented the front end dashboard in zig using DearImGui with live 2d and 3d plots and visualizations
         - Packaged with the Nix package manager
+      ],
+    )
+  ],
+)
+
+#pagebreak()
+#project(
+  [BFSK Communication],
+  "",
+  [
+    Binary frequency shift keyed (BFSK ) communication protocal implemented on the Pluto SDR
+  ],
+  [
+    #grid(
+      columns: (1fr, 0.9fr),
+      [
+        #figure(
+          image("portfolio/BFSK_Comms.png", width: 90%),
+          caption: "TUI for BFSK communication",
+        )
+        #figure(
+          image("portfolio/BFSK_Pluto.png", width: 90%),
+          caption: "Two pluto SDRs wirelessly communicating over BFSK on 915MHz Ham Radio band",
+        )
+      ],
+      [
+        - Python script to send and recieve BFSK messages
+        - Custom BFSK protocol with packet alignment and variable length messages
+        - Tested up to 500MHz baud rate but currently limited by python send and receive buffer initialization
+        - Packet header which includes
+          - Packet alignment preamble
+          - Amature radio callsign
+          - Packet length
+          - Unique message ID
+        - Communication protocol designed to be very similar to Bluetooth Low Energy
+
+        #figure(
+          image("portfolio/BFSK_Decoding.png"),
+          caption: [Recieved waveform frequency shift decoding],
+        )
+      ],
+    )
+  ],
+)
+
+#pagebreak()
+#project(
+  [Hydroflex],
+  "",
+  [
+    Designed multiple human machine interfaces for HydroFlex, a remote driven internal polishing machine
+  ],
+  [
+    #grid(
+      columns: (1fr, 0.9fr),
+      [#figure(
+          image("portfolio/HydroFlex-HMIPrototype.png", width: 90%),
+          caption: "Initial Prototype HMI",
+        )
+        #figure(
+          image("portfolio/HydroFlex-PCB.png", width: 90%),
+          caption: "PCB for HMI",
+        )],
+      [
+        - Initial prototype with ESP32 devboard soldered to protoboard.
+        - Remote HMI with serial comunication of human input to main control board
+        - Stand alone unit designed to interface with MAXON motor controller with integrated 7 segment RPM readout, interface controls, and micro SD card for logging
+        - Designed PCB to replace prototype stand alone unit with streamlined integration and additional sensor interfaces
+          - Integrated 50V - 3V buck converter
+          - eFuse for soft starting motor controller and current monitoring
+          - On board seven segement and rotary knob
+          - MicroSD card for data logging
+
+
       ],
     )
   ],
@@ -99,10 +183,15 @@
     )
     #grid(
       columns: (1fr, 1fr),
-      figure(image("portfolio/wheelspeed-test.png", width: 90%), caption: "Single wheel speed pcb."),
-      [\ \ \ \
-        - Created a lego test bench to hold test magnet ring a fixed distance from the sensor
-        - Communicating to the computer through an esp32 that is acting as a UART bridge to a custom IO board which is designed to do sensor comunication on the FSAE car
+      figure(
+        image("portfolio/wheelspeed-test.png", width: 90%),
+        caption: [Lego test jig with 3d printed magnet ring \ #text(size:7pt)[(The ICs on the right are not doing anything, \ they were just being stored on the breadboard)]],
+      ),
+      [
+        - Created an adjustable lego test bench to hold test magnet ring a fixed distance from the sensor
+          - Used to test for optimal magnet distance
+          - Processing firmware running on custom IO board which is designed to do sensor comunication on the FSAE car
+          - For this test setup communication was done to the computer through an esp32 that is acting as a UART to USB bridge
       ],
     )
   ],
@@ -117,13 +206,13 @@
   ],
   [
     #figure(
-      image("portfolio/NewSegment.png", width: 95%),
+      image("portfolio/NewSegment.png", width: 90%),
       caption: "Single new segment with retrofit copper bus bars and pcb",
     )
     #grid(
-      columns: (1fr, 0.8fr),
+      columns: (1fr, 0.9fr),
       figure(
-        image("portfolio/AccumulatorAssemble.jpg", width: 90%),
+        image("portfolio/AccumulatorAssemble.jpg", height: 4.5cm, width: 90%),
         caption: "Accumulator assembled with single old revision segment in the top left corner",
       ),
       [
@@ -133,15 +222,18 @@
         - Improved spot welding process for better speed and reliability:
           - Added nickel strips to each spot weld to dramatically increase spot weld reliability
           - Designed mount for holding probes at a precise distance
-          - Removed unessacary copper to reduce risk of accidentally shorting cell groups while spot welding
-        - Routed copper bus bars in house with an engraving bit to minimize post processing work
+          - Removed unnecessary copper to reduce risk of accidentally shorting cell groups while spot welding
+          - Used cell tap PCB to cover areas that shoudln't be spot welded.
       ],
     )
     #grid(
       columns: (1fr, 0.8fr, 0.4fr),
       [
-        \ \ \ \ \ \
-        - Manufactured and tested fusible links for each cell to protect the accumulator in a short circuit
+        - Designed manufacturing process for copper bus bars to optimize for speed and minimize post processing work
+          - Used masking tape and 3M spray adhesive to fixture .127mm copper sheets
+          - Routed bus bar cutouts with chamfered engraving bit to minimize burs
+          - Designed 3d printed press to form strain relief in the bus bars
+        - Tested fusible links for each cell to protect the accumulator in a short circuit
       ],
       figure(image("portfolio/i2t.png", width: 90%), caption: "I2t plot of custom in house fusable links"),
       figure(image("portfolio/FusableLink.png", width: 90%), caption: "Custom copper fusable link design"),
@@ -159,10 +251,10 @@
   [
     #grid(
       columns: (1fr, 1fr),
-      figure(image("portfolio/SoundCameraPCB.png", width:90%), caption: "Revision 1 of the sound camera PCB"),
+      figure(image("portfolio/SoundCameraPCB.png", width: 90%), caption: "Revision 1 of the sound camera PCB"),
       [
         - Custom PCB for each sensor with onboard STM32, stereo microphones, and a piezoelectric buzzer
-        - CAN bus communication in order to allow flexable number of sensors in a network.
+        - Multidrop RS485 bus communication in order to allow flexable number of sensors in a network.
         - This project hasn't been finished yet but is under way. Some of the goals for features are:
           - Automated sensor position detection using onboard speaker to triangulate relative position
           - Early detection of mechanical failure using audio analysis of system
